@@ -1,5 +1,5 @@
 defmodule Mix.Tasks.Compile.Sugar do
-  use Mix.Task
+  use Mix.Task.Compiler
 
   @hidden true
   @shortdoc "Compile Sugar source files"
@@ -68,12 +68,17 @@ defmodule Mix.Tasks.Compile.Sugar do
           Mix.shell.info "Generated #{name}"
         end)
 
-      # compiled =
-      Sugar.Templates.get_all_templates
-        |> Map.keys
+      compiled =
+        Sugar.Templates.get_all_templates
+          |> Map.keys
 
+      write_manifest(manifest, compiled)
       # Mix.Utils.write_manifest(manifest, compiled)
     end
+  end
+
+  defp write_manifest(manifest, content) do
+    File.write!(manifest, content)
   end
 
   # defp template_mtime(%Templates.Template{key: key, updated_at: updated_at}) do
