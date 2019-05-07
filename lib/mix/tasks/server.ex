@@ -14,7 +14,7 @@ defmodule Mix.Tasks.Server do
 
   """
   def run(args) do
-    opts = OptionParser.parse(args, aliases: [h: :host, p: :port]) |> elem(0)
+    opts = OptionParser.parse(args, switches: [host: :string, port: :string], aliases: [h: :host, p: :port]) |> elem(0)
     Mix.Task.run "app.start", args
     Mix.Task.run "compile.sugar", args
 
