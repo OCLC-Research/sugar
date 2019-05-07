@@ -50,7 +50,12 @@ defmodule Sugar.Views.Finder do
   end
 
   defp build(path) do
-    key = Path.basename(path)
+    controller = Path.dirname(path) |> Path.basename
+    action = Path.basename(path)
+                  |> String.split(".")
+                  |> List.first
+                  |> String.downcase
+    key = "#{controller}/#{action}"
     build(path, key)
   end
   defp build(path, key) do
